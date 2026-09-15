@@ -31,7 +31,10 @@ export function VideoField({ label, description, value, onChange }: VideoFieldPr
           value={isBundled ? value.url : CUSTOM_VIDEO_VALUE}
           onChange={(e) => {
             const next = e.target.value
-            if (next === CUSTOM_VIDEO_VALUE) return
+            if (next === CUSTOM_VIDEO_VALUE) {
+              onChange({ ...value, url: '' })
+              return
+            }
             onChange({ ...value, url: next })
           }}
         >
