@@ -1,5 +1,6 @@
 import { createMiddleware } from 'hono/factory'
-import * as jwt from 'jsonwebtoken'
+import pkg from 'jsonwebtoken'
+const { sign, verify } = pkg
 
 export interface JwtPayload {
   userId: string
@@ -11,11 +12,11 @@ const JWT_SECRET = () => process.env.JWT_SECRET ?? 'dev-secret-change-me'
 const TOKEN_EXPIRY = '8h'
 
 export function signToken(payload: JwtPayload): string {
-  return jwt.sign(payload, JWT_SECRET(), { expiresIn: TOKEN_EXPIRY })
+  return sign(payload, JWT_SECRET(), { expiresIn: TOKEN_EXPIRY })
 }
 
 export function verifyToken(token: string): JwtPayload {
-  return jwt.verify(token, JWT_SECRET()) as JwtPayload
+  return verify(token, JWT_SECRET()) as JwtPayload
 }
 
 export const requireAuth = createMiddleware<{

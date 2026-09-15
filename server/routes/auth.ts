@@ -1,5 +1,6 @@
 import { Hono } from 'hono'
-import * as bcrypt from 'bcryptjs'
+import pkg from 'bcryptjs'
+const { compare } = pkg
 import { eq } from 'drizzle-orm'
 import { db, schema } from '../db/index.js'
 import { signToken, requireAuth } from '../middleware/auth.js'
@@ -20,7 +21,7 @@ app.post('/login', async (c) => {
 
   if (!user) return c.json({ error: 'Invalid email or password' }, 401)
 
-  const valid = await bcrypt.compare(body.password, user.passwordHash)
+  const valid = await compare(body.password, user.passwordHash)
   if (!valid) return c.json({ error: 'Invalid email or password' }, 401)
 
   const token = signToken({ userId: user.id, email: user.email, role: user.role })
