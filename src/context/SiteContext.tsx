@@ -6,7 +6,7 @@ import { DEFAULT_SITE_SETTINGS } from '@/data/seed'
 interface SiteContextValue {
   settings: SiteSettings
   isLoading: boolean
-  updateSettings: (patch: Partial<SiteSettings>) => void
+  updateSettings: (patch: Partial<SiteSettings>) => Promise<void>
   isSectionEnabled: (key: SectionKey) => boolean
   orderedSections: SiteSettings['sections']
   resetSettings: () => void
@@ -27,9 +27,9 @@ export function SiteProvider({ children }: { children: ReactNode }) {
     }).catch(() => setIsLoading(false))
   }, [])
 
-  const updateSettings = useCallback((patch: Partial<SiteSettings>) => {
+  const updateSettings = useCallback(async (patch: Partial<SiteSettings>) => {
     setSettings((prev) => ({ ...prev, ...patch }))
-    siteService.update(patch).catch(() => {})
+    await siteService.update(patch)
   }, [])
 
   const resetSettings = useCallback(() => {

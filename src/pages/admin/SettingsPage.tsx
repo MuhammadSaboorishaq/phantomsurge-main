@@ -21,9 +21,13 @@ export default function SettingsPage() {
     setForm((f) => ({ ...f, [key]: value }))
   }
 
-  function save() {
-    updateSettings(form)
-    show('Settings saved.', 'success')
+  async function save() {
+    try {
+      await updateSettings(form)
+      show('Settings saved.', 'success')
+    } catch {
+      show('Failed to save settings.', 'error')
+    }
   }
 
   function moveSection(index: number, dir: -1 | 1) {
@@ -151,9 +155,8 @@ export default function SettingsPage() {
             onChange={(v) => set('media', { ...form.media, contactVideo: v })}
           />
           <p className="text-[11px] leading-relaxed text-faint">
-            New video files can&rsquo;t be uploaded directly here — a single clip is tens of megabytes, well past what
-            this demo&rsquo;s localStorage-backed persistence can hold. Add new files to <code>/public/videos</code> in
-            the project and they&rsquo;ll appear in the source list above, or paste a hosted URL as a custom source.
+            Paste a YouTube, Vimeo, or direct .mp4 URL as a custom source. Bundled videos are served from the
+            project&rsquo;s <code>/public/videos</code> directory.
           </p>
         </div>
       ),
