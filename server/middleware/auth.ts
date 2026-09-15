@@ -1,5 +1,5 @@
 import { createMiddleware } from 'hono/factory'
-import jwt from 'jsonwebtoken'
+import * as jwt from 'jsonwebtoken'
 
 export interface JwtPayload {
   userId: string

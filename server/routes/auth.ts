@@ -1,5 +1,5 @@
 import { Hono } from 'hono'
-import bcrypt from 'bcryptjs'
+import * as bcrypt from 'bcryptjs'
 import { eq } from 'drizzle-orm'
 import { db, schema } from '../db'
 import { signToken, requireAuth } from '../middleware/auth'
