@@ -1,0 +1,276 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   PHANTOM SURGE — DESIGN TOKENS
+   Runtime-editable CSS custom properties. The admin Theme Editor mutates
+   the `--c-*` values on :root at runtime; Tailwind utilities below are
+   generated from `@theme` and simply forward to those variables, so every
+   utility class (bg-bg, text-accent, border-line, etc.) updates live.
+   ========================================================================== */
+
+:root {
+  /* Surfaces */
+  --c-bg: #07090b;
+  --c-bg-alt: #0a0d10;
+  --c-surface: #0f1316;
+  --c-surface-2: #141a1e;
+
+  /* Borders */
+  --c-line: rgba(233, 239, 242, 0.09);
+  --c-line-strong: rgba(233, 239, 242, 0.16);
+
+  /* Chrome / metallic gradient stops */
+  --c-chrome-1: #f2f4f6;
+  --c-chrome-2: #c3cad0;
+  --c-chrome-3: #7a828a;
+
+  /* Brand */
+  --c-primary: #2ee0cd;
+  --c-secondary: #7a828a;
+  --c-accent: #2ee0cd;
+  --c-accent-dim: #12706a;
+  --c-accent-glow: rgba(46, 224, 205, 0.45);
+
+  /* Text */
+  --c-text: #e9edf0;
+  --c-muted: #8b949c;
+  --c-faint: #565e65;
+
+  /* Typography */
+  --f-display: 'Saira Condensed', sans-serif;
+  --f-body: 'Inter', sans-serif;
+  --f-mono: 'JetBrains Mono', monospace;
+
+  /* Radius (controlled by theme: sharp | subtle | rounded) */
+  --r-card: 2px;
+  --r-control: 3px;
+  --r-pill: 999px;
+
+  /* Motion (controlled by theme: minimal | normal | cinematic) */
+  --m-fast: 0.2s;
+  --m-normal: 0.4s;
+  --m-cinematic: 0.8s;
+  --m-scale: 1;
+
+  color-scheme: dark;
+}
+
+@theme {
+  --color-bg: var(--c-bg);
+  --color-bg-alt: var(--c-bg-alt);
+  --color-surface: var(--c-surface);
+  --color-surface-2: var(--c-surface-2);
+  --color-line: var(--c-line);
+  --color-line-strong: var(--c-line-strong);
+  --color-chrome-1: var(--c-chrome-1);
+  --color-chrome-2: var(--c-chrome-2);
+  --color-chrome-3: var(--c-chrome-3);
+  --color-primary: var(--c-primary);
+  --color-secondary: var(--c-secondary);
+  --color-accent: var(--c-accent);
+  --color-accent-dim: var(--c-accent-dim);
+  --color-text: var(--c-text);
+  --color-muted: var(--c-muted);
+  --color-faint: var(--c-faint);
+
+  --font-display: var(--f-display);
+  --font-sans: var(--f-body);
+  --font-mono: var(--f-mono);
+
+  --radius-card: var(--r-card);
+  --radius-control: var(--r-control);
+  --radius-pill: var(--r-pill);
+
+  --breakpoint-xs: 375px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--f-body);
+  line-height: 1.55;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--c-accent);
+  color: #04110f;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--c-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--c-surface-2);
+  border-radius: 8px;
+  border: 2px solid var(--c-bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--c-faint);
+}
+
+/* Focus visibility — never sacrificed for aesthetics */
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   Typography helpers
+   ========================================================================== */
+
+.font-display {
+  font-family: var(--f-display);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 1.02;
+}
+
+.chrome-text {
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    var(--c-chrome-1) 22%,
+    var(--c-chrome-2) 55%,
+    var(--c-chrome-3) 78%,
+    var(--c-chrome-1) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.accent-text {
+  color: var(--c-accent);
+}
+
+.eyebrow {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--c-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.eyebrow::before {
+  content: '';
+  width: 22px;
+  height: 1px;
+  background: var(--c-accent);
+  box-shadow: 0 0 6px var(--c-accent-glow);
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Utility layer additions
+   ========================================================================== */
+
+.wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  /* padding-left/right only — never the `padding` shorthand, which would
+     zero out vertical padding on any element that also carries a Tailwind
+     py-* utility (e.g. <nav class="wrap ... py-4">), silently overriding it
+     regardless of source order since both are single-class selectors. */
+  padding-left: 24px;
+  padding-right: 24px;
+}
+@media (min-width: 768px) {
+  .wrap {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+.noise-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.bg-grid {
+  background-image: linear-gradient(var(--c-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--c-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.animate-marquee {
+  animation: marquee-scroll 32s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation-duration: 90s;
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.animate-pulse-glow {
+  animation: pulse-glow 3.4s ease-in-out infinite;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--c-surface) 0%, var(--c-surface-2) 50%, var(--c-surface) 100%);
+  background-size: 200% 100%;
+  animation: skeleton-sweep 1.6s ease-in-out infinite;
+}
+@keyframes skeleton-sweep {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Custom cursor states — cursor element itself lives in CustomCursor.tsx */
+.cursor-none-desktop {
+  cursor: none;
+}
