@@ -1,8 +1,8 @@
 import { Hono } from 'hono'
 import * as bcrypt from 'bcryptjs'
 import { eq } from 'drizzle-orm'
-import { db, schema } from '../db'
-import { signToken, requireAuth } from '../middleware/auth'
+import { db, schema } from '../db/index.js'
+import { signToken, requireAuth } from '../middleware/auth.js'
 
 const app = new Hono()
 

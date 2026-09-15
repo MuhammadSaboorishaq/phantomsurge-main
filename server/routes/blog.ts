@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 import { eq, desc } from 'drizzle-orm'
-import { db, schema } from '../db'
-import { requireAuth } from '../middleware/auth'
+import { db, schema } from '../db/index.js'
+import { requireAuth } from '../middleware/auth.js'
 import { v4 as uuid } from 'uuid'
 
 const app = new Hono()
