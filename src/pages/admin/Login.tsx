@@ -7,7 +7,7 @@ import { Field } from '@/components/ui/Field'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
 import { SEO } from '@/components/layout/SEO'
-import { ADMIN_ROUTES, DEMO_ADMIN_EMAIL, DEMO_ADMIN_PASSWORD } from '@/lib/constants'
+import { ADMIN_ROUTES } from '@/lib/constants'
 
 export default function Login() {
   const { isAuthenticated, login, isLoading, error } = useAuth()
@@ -70,14 +70,6 @@ export default function Login() {
           </Button>
         </form>
 
-        <div className="mt-6 rounded-[var(--r-control)] border border-line bg-surface/30 p-4 text-center font-mono text-[11px] text-faint">
-          <p className="mb-1.5 uppercase tracking-wide text-muted">Demo credentials</p>
-          <p>{DEMO_ADMIN_EMAIL}</p>
-          <p>{DEMO_ADMIN_PASSWORD}</p>
-          <p className="mt-2 text-[10px] normal-case leading-relaxed text-faint">
-            Mock authentication for demonstration only — not production secure.
-          </p>
-        </div>
       </div>
     </div>
   )
