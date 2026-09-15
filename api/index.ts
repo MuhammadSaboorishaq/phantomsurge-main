@@ -36,4 +36,9 @@ app.route('/upload', upload)
 
 app.get('/health', (c) => c.json({ status: 'ok', timestamp: new Date().toISOString() }))
 
-export default handle(app)
+const handler = handle(app)
+export const GET = handler
+export const POST = handler
+export const PUT = handler
+export const PATCH = handler
+export const DELETE = handler
