@@ -8,7 +8,7 @@ import { StreakMark } from '@/components/brand/StreakMark'
  * (admin-controlled): grid, glow, noise, particles, streaks. Kept to
  * transform/opacity-only CSS animation — no canvas — to stay cheap on the GPU.
  */
-export function BackgroundFX({ variant = 'default' }: { variant?: 'default' | 'hero' | 'contact' }) {
+export function BackgroundFX({ variant = 'default', hasVideo = false }: { variant?: 'default' | 'hero' | 'contact'; hasVideo?: boolean }) {
   const { theme } = useTheme()
   const reduced = useReducedMotionPref()
   const fx = theme.backgroundEffects
@@ -42,10 +42,10 @@ export function BackgroundFX({ variant = 'default' }: { variant?: 'default' | 'h
         />
       )}
 
-      {fx.streaks && variant === 'hero' && (
+      {fx.streaks && !hasVideo && variant === 'hero' && (
         <StreakMark className="absolute -right-[10%] -top-[8%] w-[min(70vw,780px)] opacity-70" />
       )}
-      {fx.streaks && variant === 'contact' && (
+      {fx.streaks && !hasVideo && variant === 'contact' && (
         <StreakMark className="absolute -right-[15%] -top-[25%] w-[55%] opacity-40" />
       )}
 

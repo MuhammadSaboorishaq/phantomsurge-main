@@ -30,7 +30,7 @@ export function Hero() {
           overlayClassName="bg-gradient-to-b from-bg/85 via-bg/65 to-bg"
         />
       )}
-      <BackgroundFX variant="hero" />
+      <BackgroundFX variant="hero" hasVideo={settings.media.heroVideo.enabled && !!settings.media.heroVideo.url} />
 
       {!reduced && (
         <motion.div

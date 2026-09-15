@@ -19,7 +19,7 @@ export function ContactCTA() {
                 overlayClassName="bg-gradient-to-b from-surface/90 via-surface/75 to-surface"
               />
             )}
-            <BackgroundFX variant="contact" />
+            <BackgroundFX variant="contact" hasVideo={settings.media.contactVideo.enabled && !!settings.media.contactVideo.url} />
             <div className="relative z-[2]">
               <span className="eyebrow justify-center">Get in touch</span>
               <h2 className="font-display chrome-text mx-auto mt-5 max-w-2xl text-[clamp(30px,4.6vw,52px)] leading-[1.02]">
