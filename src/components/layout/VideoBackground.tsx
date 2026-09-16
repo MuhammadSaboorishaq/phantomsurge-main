@@ -29,8 +29,12 @@ export function VideoBackground({ src, className, overlayClassName, eager = fals
         <iframe
           src={embedUrl}
           allow="autoplay; encrypted-media"
-          className="absolute inset-0 h-full w-full border-0 object-cover"
-          style={{ transform: 'scale(1.2)' }}
+          className="absolute left-1/2 top-1/2 border-0"
+          style={{
+            width: 'max(100%, 177.78vh)',
+            height: 'max(100%, 56.25vw)',
+            transform: 'translate(-50%, -50%)',
+          }}
           tabIndex={-1}
         />
       )}
