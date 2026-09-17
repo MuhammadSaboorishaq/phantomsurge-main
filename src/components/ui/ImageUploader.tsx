@@ -77,24 +77,40 @@ export function ImageUploader({
         <div className={`${aspect} w-full overflow-hidden bg-bg-alt`}>
           <img src={value} alt="Uploaded preview" className="h-full w-full object-cover" />
         </div>
-        <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/60 opacity-0 transition-opacity group-hover:opacity-100">
-          <button
-            type="button"
-            onClick={() => inputRef.current?.click()}
-            className="rounded-[var(--r-control)] border border-line-strong bg-surface/90 px-3 py-2 font-mono text-[11px] uppercase tracking-wide text-text hover:border-accent hover:text-accent"
-          >
-            Replace
-          </button>
-          {onRemove && (
+        {progress !== null ? (
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-black/70">
+            <Upload className="text-accent" size={22} />
+            <div className="w-2/3">
+              <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+                <motion.div
+                  className="h-full bg-accent"
+                  animate={{ width: `${progress}%` }}
+                  transition={{ duration: 0.15 }}
+                />
+              </div>
+              {meta && <p className="mt-2 text-center font-mono text-[11px] text-white/70">{meta.name} · {meta.size}</p>}
+            </div>
+          </div>
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/60 opacity-0 transition-opacity group-hover:opacity-100">
             <button
               type="button"
-              onClick={onRemove}
-              className="rounded-[var(--r-control)] border border-red-500/40 bg-surface/90 px-3 py-2 font-mono text-[11px] uppercase tracking-wide text-red-400 hover:bg-red-500/10"
+              onClick={() => inputRef.current?.click()}
+              className="rounded-[var(--r-control)] border border-line-strong bg-surface/90 px-3 py-2 font-mono text-[11px] uppercase tracking-wide text-text hover:border-accent hover:text-accent"
             >
-              Remove
+              Replace
             </button>
-          )}
-        </div>
+            {onRemove && (
+              <button
+                type="button"
+                onClick={onRemove}
+                className="rounded-[var(--r-control)] border border-red-500/40 bg-surface/90 px-3 py-2 font-mono text-[11px] uppercase tracking-wide text-red-400 hover:bg-red-500/10"
+              >
+                Remove
+              </button>
+            )}
+          </div>
+        )}
         <input
           ref={inputRef}
           type="file"
