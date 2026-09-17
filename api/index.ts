@@ -12,6 +12,7 @@ import testimonials from '../server/routes/testimonials.js'
 import contacts from '../server/routes/contacts.js'
 import settings from '../server/routes/settings.js'
 import upload from '../server/routes/upload.js'
+import bot from '../server/routes/bot.js'
 
 const app = new Hono().basePath('/api')
 
@@ -33,6 +34,7 @@ app.route('/testimonials', testimonials)
 app.route('/contacts', contacts)
 app.route('/settings', settings)
 app.route('/upload', upload)
+app.route('/bot', bot)
 
 app.get('/health', (c) => c.json({ status: 'ok', timestamp: new Date().toISOString() }))
 
