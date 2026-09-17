@@ -32,6 +32,7 @@ app.post('/', requireAuth, async (c) => {
   const blob = await put(file.name, file, {
     access: 'public',
     contentType: file.type,
+    addRandomSuffix: true,
   })
 
   return c.json({ url: blob.url, key: blob.pathname }, 201)
