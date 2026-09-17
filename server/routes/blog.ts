@@ -77,6 +77,7 @@ app.patch('/:id', requireAuth, async (c) => {
   if (body.slug) body.slug = slugify(body.slug)
   if (body.content) body.readingTime = readingTime(body.content)
   if (body.publishedDate) body.publishedDate = new Date(body.publishedDate)
+  else delete body.publishedDate
 
   await db.update(schema.blogPosts).set(body).where(eq(schema.blogPosts.id, c.req.param('id')))
   const [updated] = await db.select().from(schema.blogPosts).where(eq(schema.blogPosts.id, c.req.param('id'))).limit(1)

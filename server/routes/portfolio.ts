@@ -90,6 +90,7 @@ app.post('/', requireAuth, async (c) => {
 app.patch('/:id', requireAuth, async (c) => {
   const body = await c.req.json()
   const id = c.req.param('id')
+  delete body.createdAt
   body.updatedAt = new Date()
   if (body.slug) body.slug = slugify(body.slug)
 
