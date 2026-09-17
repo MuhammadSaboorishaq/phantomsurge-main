@@ -55,9 +55,10 @@ export const api = {
   delete: <T>(path: string) =>
     request<T>(path, { method: 'DELETE' }),
 
-  upload: <T>(path: string, file: File) => {
+  upload: <T>(path: string, file: File, replaceUrl?: string) => {
     const formData = new FormData()
     formData.append('file', file)
+    if (replaceUrl) formData.append('replaceUrl', replaceUrl)
     return request<T>(path, { method: 'POST', body: formData })
   },
 }

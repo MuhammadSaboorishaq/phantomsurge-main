@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { ArrowDown, ArrowUp, Save } from 'lucide-react'
+import { ArrowDown, ArrowUp, Save, Trash2 } from 'lucide-react'
 import { useSite } from '@/context/SiteContext'
 import { useToast } from '@/context/ToastContext'
+import { api } from '@/lib/api'
 import { Field } from '@/components/ui/Field'
 import { Input, Textarea } from '@/components/ui/Input'
 import { Switch } from '@/components/ui/Switch'
@@ -16,6 +17,7 @@ export default function SettingsPage() {
   const { settings, updateSettings, resetSettings } = useSite()
   const { show } = useToast()
   const [form, setForm] = useState<SiteSettings>(settings)
+  const [cleaning, setCleaning] = useState(false)
 
   function set<K extends keyof SiteSettings>(key: K, value: SiteSettings[K]) {
     setForm((f) => ({ ...f, [key]: value }))
@@ -263,6 +265,30 @@ export default function SettingsPage() {
             <Field label="Timezone">
               <Input value={form.timezone} onChange={(e) => set('timezone', e.target.value)} />
             </Field>
+          </div>
+          <div className="flex items-center justify-between rounded-[var(--r-control)] border border-line bg-surface/30 p-4">
+            <div>
+              <p className="text-sm text-text">Cleanup Unused Media</p>
+              <p className="text-xs text-faint">Scans blob storage and deletes files not referenced by any content.</p>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              icon={<Trash2 size={13} />}
+              loading={cleaning}
+              onClick={async () => {
+                setCleaning(true)
+                try {
+                  const result = await api.post<{ deleted: number; referenced: number }>('/upload/cleanup')
+                  show(`Cleaned up ${result.deleted} orphaned file${result.deleted === 1 ? '' : 's'}. ${result.referenced} files in use.`, 'success')
+                } catch {
+                  show('Cleanup failed.', 'error')
+                }
+                setCleaning(false)
+              }}
+            >
+              Run Cleanup
+            </Button>
           </div>
         </div>
       ),

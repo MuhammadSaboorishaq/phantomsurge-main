@@ -30,7 +30,7 @@ export function ImageUploader({
   const [error, setError] = useState<string | null>(null)
 
   const processFile = useCallback(
-    (file: File) => {
+    (file: File, replaceUrl?: string) => {
       setError(null)
       if (!file.type.startsWith('image/')) {
         setError('Please upload an image file (JPG, PNG, WEBP or SVG).')
@@ -48,7 +48,7 @@ export function ImageUploader({
         setProgress(fakeProgress)
       }, 100)
 
-      api.upload<{ url: string }>('/upload', file)
+      api.upload<{ url: string }>('/upload', file, replaceUrl)
         .then((result) => {
           clearInterval(timer)
           setProgress(100)
@@ -100,7 +100,7 @@ export function ImageUploader({
           type="file"
           accept={accept}
           className="hidden"
-          onChange={(e) => e.target.files?.[0] && processFile(e.target.files[0])}
+          onChange={(e) => e.target.files?.[0] && processFile(e.target.files[0], value)}
         />
       </div>
     )
