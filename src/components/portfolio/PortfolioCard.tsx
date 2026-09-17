@@ -23,7 +23,7 @@ export function PortfolioCard({ item, index = 0 }: { item: PortfolioItem; index?
       <Link
         to={SITE_ROUTES.workDetail(item.slug)}
         data-cursor="image"
-        className="group relative block aspect-[4/5] overflow-hidden rounded-[var(--r-card)] border border-line bg-surface transition-colors duration-300 hover:border-accent/40"
+        className="group relative block aspect-video overflow-hidden rounded-[var(--r-card)] border border-line bg-surface transition-colors duration-300 hover:border-accent/40"
         style={{
           transform: reduced ? undefined : `perspective(900px) rotateX(${pointer.y * -3}deg) rotateY(${pointer.x * 3}deg)`,
           transformStyle: 'preserve-3d',
