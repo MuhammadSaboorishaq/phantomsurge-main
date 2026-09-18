@@ -15,13 +15,15 @@ async function getNotifyEmail(): Promise<string | null> {
 
 async function sendNotification(msg: { name: string; email: string; company: string | null; projectType: string; budget: string; message: string }) {
   const apiKey = process.env.RESEND_API_KEY
-  if (!apiKey) return
+  if (!apiKey) { console.log('[contact-notify] RESEND_API_KEY not set'); return }
 
   const to = await getNotifyEmail()
-  if (!to) return
+  if (!to) { console.log('[contact-notify] No contactEmail in settings'); return }
+
+  console.log(`[contact-notify] Sending to ${to}`)
 
   try {
-    await fetch('https://api.resend.com/emails', {
+    const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
@@ -50,7 +52,11 @@ async function sendNotification(msg: { name: string; email: string; company: str
         `,
       }),
     })
-  } catch {}
+    const resBody = await res.json().catch(() => ({}))
+    console.log(`[contact-notify] Resend response: ${res.status}`, resBody)
+  } catch (err) {
+    console.error('[contact-notify] Failed:', err)
+  }
 }
 
 // Public — contact form submission (no auth required)
